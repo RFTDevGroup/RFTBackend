@@ -1,5 +1,6 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
+import com.rftdevgroup.transporthub.data.dto.UserDTO;
 import com.rftdevgroup.transporthub.data.model.User;
 import com.rftdevgroup.transporthub.data.repository.UserRepository;
 import com.rftdevgroup.transporthub.service.UserService;
@@ -17,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public List<User> users() {
+    public List<UserDTO> users() {
         return userService.listUsers();
     }
 }
