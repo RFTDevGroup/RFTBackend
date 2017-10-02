@@ -1,4 +1,4 @@
-package com.rftdevgroup.transporthub.model;
+package com.rftdevgroup.transporthub.data.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
