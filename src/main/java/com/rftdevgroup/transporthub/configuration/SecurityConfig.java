@@ -13,6 +13,9 @@ import org.springframework.session.web.http.HttpSessionStrategy;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private CustomAuthProvider provider;
+
     @Bean
     public HttpSessionStrategy httpSessionStrategy() {
         return new HeaderHttpSessionStrategy();
@@ -21,8 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
-                .inMemoryAuthentication()
-                .withUser("rftadmin").password("rftpassword").roles("ADMIN");
+                .authenticationProvider(provider);
     }
 
     @Override
