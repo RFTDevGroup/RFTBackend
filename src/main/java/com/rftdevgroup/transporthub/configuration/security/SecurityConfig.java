@@ -1,4 +1,4 @@
-package com.rftdevgroup.transporthub.configuration;
+package com.rftdevgroup.transporthub.configuration.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

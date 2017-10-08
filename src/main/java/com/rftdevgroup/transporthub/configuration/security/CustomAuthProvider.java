@@ -1,4 +1,4 @@
-package com.rftdevgroup.transporthub.configuration;
+package com.rftdevgroup.transporthub.configuration.security;
 
 import com.rftdevgroup.transporthub.data.dto.UserDTO;
 import com.rftdevgroup.transporthub.service.UserService;
