@@ -5,6 +5,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  session:
+    store-type: redis
+
+  redis:
+    host: localhost
+    password:
+    port: 32768
 
 flyway:
   check-location: true
