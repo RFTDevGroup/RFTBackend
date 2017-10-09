@@ -1,2 +1,2 @@
-INSERT INTO user (id, user_name, password) VALUES (1, 'rftadmin', 'password');
+INSERT INTO user (id, user_name, password) VALUES (1, 'rftadmin', '$2a$12$BVFMhIW9BQJtg/niwjx1BOajHSfsspmsR4vmPSdymDabpophd7i.6');
 INSERT INTO user (id, user_name, password) VALUES (2, 'rftuser', 'userpassword');
