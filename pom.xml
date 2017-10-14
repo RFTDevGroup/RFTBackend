@@ -46,7 +46,7 @@
         </dependency>
 
         <!-- Misc -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session</artifactId>
             <version>${spring.session.version}</version>
@@ -65,7 +65,7 @@
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
             <version>${spring-security.oauth2.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- Test related dependencies -->
         <dependency>

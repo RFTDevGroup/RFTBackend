@@ -2,10 +2,6 @@ package com.rftdevgroup.transporthub.controller.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.session.SessionInformation;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.session.Session;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,7 +25,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/activeUsers", method = RequestMethod.GET)
-    public List<Object> activeUsers(SessionRegistryImpl sessionRegistry) {
-        return sessionRegistry.getAllPrincipals();
+    public List<Object> activeUsers(HttpSession session) {
+        return null;
     }
 }
