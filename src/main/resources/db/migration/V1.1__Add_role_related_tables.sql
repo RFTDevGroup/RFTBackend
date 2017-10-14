@@ -1,0 +1,10 @@
+CREATE TABLE users_roles (
+  id         BIGINT NOT NULL PRIMARY KEY,
+  user_id BIGINT NOT NULL,
+  role_id BIGINT NOT NULL
+);
+
+CREATE TABLE role (
+  id         BIGINT NOT NULL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL
+);

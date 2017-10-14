@@ -17,8 +17,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public List<UserDTO> users() {
-        return userService.listUsers();
+    public List<User> users() {
+        return userRepository.findAll();
     }
 }
