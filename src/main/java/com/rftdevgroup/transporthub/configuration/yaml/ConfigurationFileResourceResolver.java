@@ -11,6 +11,7 @@ public class ConfigurationFileResourceResolver {
     private final String[] CONFIGS = {"main"};
     private final String PROFILE_CONFIG_PREFIX = "config-";
     private final String PROFILE_CONFIG_SUFFIX = ".yml";
+    private final String CONFIG_DIR_NAME = "config";
 
     public Resource[] getResourceArray() {
         return getResourceArray(PROFILE_CONFIG_PREFIX, PROFILE_CONFIG_SUFFIX);
@@ -20,7 +21,7 @@ public class ConfigurationFileResourceResolver {
         List<Resource> resourceList = new ArrayList<>();
 
         for (String part : CONFIGS) {
-            String fileName = profileConfigPrefix + part + profileConfigSuffix;
+            String fileName = CONFIG_DIR_NAME + '/' + profileConfigPrefix + part + profileConfigSuffix;
             if (ConfigurationFileResourceResolver.class.getClassLoader().getResource(fileName) != null) {
                 resourceList.add(new ClassPathResource(fileName));
             }
