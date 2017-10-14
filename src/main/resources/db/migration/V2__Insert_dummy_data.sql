@@ -1,5 +1,5 @@
 INSERT INTO user (id, user_name, password) VALUES (1, 'rftadmin', '$2a$12$BVFMhIW9BQJtg/niwjx1BOajHSfsspmsR4vmPSdymDabpophd7i.6');
-INSERT INTO user (id, user_name, password) VALUES (2, 'rftuser', 'userpassword');
+INSERT INTO user (id, user_name, password) VALUES (2, 'rftuser', '$2a$12$BVFMhIW9BQJtg/niwjx1BOajHSfsspmsR4vmPSdymDabpophd7i.6');
 
 INSERT INTO role (id, name) VALUES (1, 'admin');
 INSERT INTO role (id, name) VALUES (2, 'user');

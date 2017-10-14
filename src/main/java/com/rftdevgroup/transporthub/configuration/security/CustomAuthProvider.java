@@ -7,11 +7,13 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -29,8 +31,12 @@ public class CustomAuthProvider implements AuthenticationProvider {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (user.isPresent() && encoder.matches(password, user.get().getPassword())) {
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority("USER");
-            return new UsernamePasswordAuthenticationToken(username, password, Arrays.asList(authority));
+            //Get authorities
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            for (String role : user.get().getRoles()) {
+                authorities.add(new SimpleGrantedAuthority(role));
+            }
+            return new UsernamePasswordAuthenticationToken(username, password, authorities);
         } else {
             return null;
         }

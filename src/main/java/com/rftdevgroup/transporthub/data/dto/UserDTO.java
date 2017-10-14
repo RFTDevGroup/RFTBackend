@@ -1,10 +1,9 @@
 package com.rftdevgroup.transporthub.data.dto;
 
-import com.rftdevgroup.transporthub.data.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Collection;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,4 +12,5 @@ public class UserDTO {
     long id;
     String userName;
     String password;
+    List<String> roles;
 }

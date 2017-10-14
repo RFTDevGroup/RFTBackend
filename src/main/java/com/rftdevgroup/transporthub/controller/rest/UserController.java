@@ -1,10 +1,10 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
 import com.rftdevgroup.transporthub.data.dto.UserDTO;
-import com.rftdevgroup.transporthub.data.model.User;
 import com.rftdevgroup.transporthub.data.repository.UserRepository;
 import com.rftdevgroup.transporthub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +20,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public List<User> users() {
-        return userRepository.findAll();
+    public List<UserDTO> users() {
+        return userService.listUsers();
     }
 }
