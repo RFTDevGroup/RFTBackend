@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for resolving custom yaml files providing configurations for the application.
+ */
 @Component
 public class ConfigurationFileResourceResolver {
     private final String[] CONFIGS = {"main"};

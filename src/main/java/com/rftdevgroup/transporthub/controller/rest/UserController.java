@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+/**
+ * REST Controller class for providing endpoints to {@link com.rftdevgroup.transporthub.data.model.User} related operations.
+ */
 @RestController
 @RequestMapping(value = "/api")
 public class UserController {

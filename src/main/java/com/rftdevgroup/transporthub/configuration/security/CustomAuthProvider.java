@@ -16,6 +16,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * {@link AuthenticationProvider} class for authenticating users and managing authorities.
+ */
 @Component
 public class CustomAuthProvider implements AuthenticationProvider {
 

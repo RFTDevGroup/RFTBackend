@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * An implementation of the {@link UserService}.
+ */
 @Service
 public class UserServiceImpl implements UserService {
 

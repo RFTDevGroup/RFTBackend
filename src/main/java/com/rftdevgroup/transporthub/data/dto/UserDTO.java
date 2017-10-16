@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
+/**
+ * Simple DTO for the {@link com.rftdevgroup.transporthub.data.model.User}.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

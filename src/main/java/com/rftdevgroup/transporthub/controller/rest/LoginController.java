@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Custom REST controller for testing purposes.
+ * To be removed.
+ */
 @RestController
 @RequestMapping("/api")
 public class LoginController {

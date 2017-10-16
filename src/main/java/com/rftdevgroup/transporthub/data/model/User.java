@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Class specifying a user of the application.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
