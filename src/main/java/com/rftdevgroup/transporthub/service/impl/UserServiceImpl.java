@@ -36,10 +36,4 @@ public class UserServiceImpl implements UserService {
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public Optional<UserCredentialDTO> findUserCredentials(String username) {
-        Optional<User> user = userRepository.findUserByUserName(username);
-        return user.isPresent() ? Optional.of(modelMapper.map(user.get(), UserCredentialDTO.class)) : Optional.empty();
-    }
 }

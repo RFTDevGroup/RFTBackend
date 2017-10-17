@@ -1,9 +1,11 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
 import com.rftdevgroup.transporthub.data.dto.UserDTO;
+import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
 import com.rftdevgroup.transporthub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,5 +29,10 @@ public class LoginController {
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public UserDTO test() {
         return userService.findAndMapUser("rftuser", UserDTO.class).get();
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public UserRegisterDTO register(@RequestBody UserRegisterDTO registerDTO) {
+        return registerDTO;
     }
 }
