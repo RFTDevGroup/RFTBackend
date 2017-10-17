@@ -1,8 +1,10 @@
 package com.rftdevgroup.transporthub.configuration.security;
 
+import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
 import com.rftdevgroup.transporthub.data.model.user.Role;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.UserRepository;
+import com.rftdevgroup.transporthub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,21 +25,21 @@ import java.util.Optional;
 public class CustomAuthProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        Optional<User> user = userRepository.findUserByUserName(username);
+        Optional<UserCredentialDTO> user = userService.findAndMapUser(username, UserCredentialDTO.class);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (user.isPresent() && encoder.matches(password, user.get().getPassword())) {
             //Get authorities
             List<GrantedAuthority> authorities = new ArrayList<>();
-            for (Role role : user.get().getRoles()) {
-                authorities.add(new SimpleGrantedAuthority(role.toString()));
+            for (String role : user.get().getRoles()) {
+                authorities.add(new SimpleGrantedAuthority(role));
             }
             return new UsernamePasswordAuthenticationToken(username, password, authorities);
         } else {
