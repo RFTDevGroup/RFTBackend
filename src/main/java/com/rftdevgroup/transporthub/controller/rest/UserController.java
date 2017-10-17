@@ -1,6 +1,7 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
 import com.rftdevgroup.transporthub.data.dto.UserDTO;
+import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.UserRepository;
 import com.rftdevgroup.transporthub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * REST Controller class for providing endpoints to {@link com.rftdevgroup.transporthub.data.model.User} related operations.
+ * REST Controller class for providing endpoints to {@link User} related operations.
  */
 @RestController
 @RequestMapping(value = "/api")
@@ -33,8 +34,4 @@ public class UserController {
         return userService.listUsers();
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test() {
-        return test;
-    }
 }

@@ -1,12 +1,13 @@
 package com.rftdevgroup.transporthub.data.dto;
 
+import com.rftdevgroup.transporthub.data.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Simple DTO for the {@link com.rftdevgroup.transporthub.data.model.User}.
+ * Simple DTO for the {@link User}.
  */
 @Data
 @AllArgsConstructor

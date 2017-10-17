@@ -1,4 +1,4 @@
-package com.rftdevgroup.transporthub.data.model;
+package com.rftdevgroup.transporthub.data.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,4 +27,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private List<Role> roles;
+
+    @OneToOne
+    @JoinColumn(name = "udid")
+    private UserDetails details;
 }

@@ -1,6 +1,6 @@
 package com.rftdevgroup.transporthub.data.repository;
 
-import com.rftdevgroup.transporthub.data.model.User;
+import com.rftdevgroup.transporthub.data.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
