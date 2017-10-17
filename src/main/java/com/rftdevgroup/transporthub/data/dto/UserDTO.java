@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Simple DTO for the {@link User}.
+ * Detailed DTO containing extra information for the {@link User}.
  */
 @Data
 @AllArgsConstructor
@@ -15,6 +15,9 @@ import java.util.List;
 public class UserDTO {
     long id;
     String userName;
-    String password;
+    String firstName;
+    String lastName;
+    String email;
+    String address;
     List<String> roles;
 }

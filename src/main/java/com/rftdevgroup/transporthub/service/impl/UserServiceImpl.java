@@ -1,5 +1,6 @@
 package com.rftdevgroup.transporthub.service.impl;
 
+import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
 import com.rftdevgroup.transporthub.data.dto.UserDTO;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.UserRepository;
@@ -7,6 +8,7 @@ import com.rftdevgroup.transporthub.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,5 +36,11 @@ public class UserServiceImpl implements UserService {
     public Optional<UserDTO> findUser(String username) {
         Optional<User> user = userRepository.findUserByUserName(username);
         return user.isPresent() ? Optional.of(modelMapper.map(user.get(), UserDTO.class)) : Optional.empty();
+    }
+
+    @Override
+    public Optional<UserCredentialDTO> findUserCredentials(String username) {
+        Optional<User> user = userRepository.findUserByUserName(username);
+        return user.isPresent() ? Optional.of(modelMapper.map(user.get(), UserCredentialDTO.class)) : Optional.empty();
     }
 }

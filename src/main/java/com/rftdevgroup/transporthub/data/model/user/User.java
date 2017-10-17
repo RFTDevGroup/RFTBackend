@@ -28,7 +28,7 @@ public class User {
     )
     private List<Role> roles;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "udid")
     private UserDetails details;
 }

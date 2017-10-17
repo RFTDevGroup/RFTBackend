@@ -25,13 +25,12 @@ public class Address {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Address{");
-        sb.append("country='").append(country).append('\'');
-        sb.append(", zipcode='").append(zipcode).append('\'');
-        sb.append(", city='").append(city).append('\'');
-        sb.append(", street='").append(street).append('\'');
-        sb.append(", houseNo='").append(houseNo).append('\'');
-        sb.append('}');
+        final StringBuffer sb = new StringBuffer()
+                .append(country).append(", ")
+                .append(zipcode).append(" ")
+                .append(city).append(" ")
+                .append(street).append(" ")
+                .append(houseNo);
         return sb.toString();
     }
 }
