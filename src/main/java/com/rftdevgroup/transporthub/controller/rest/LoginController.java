@@ -31,8 +31,5 @@ public class LoginController {
         return userService.findAndMapUser("rftuser", UserDTO.class).get();
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserRegisterDTO register(@RequestBody UserRegisterDTO registerDTO) {
-        return registerDTO;
-    }
+
 }
