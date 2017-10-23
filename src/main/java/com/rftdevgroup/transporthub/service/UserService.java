@@ -29,4 +29,6 @@ public interface UserService {
     <T> Optional<T> findAndMapUser(String username, Class<T> mapTo);
 
     UserCredentialDTO regiserUser(UserRegisterDTO registerDTO);
+
+    boolean deleteUser(long id);
 }

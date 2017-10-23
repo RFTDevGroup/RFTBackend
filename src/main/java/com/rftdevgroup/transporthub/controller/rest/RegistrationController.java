@@ -28,7 +28,6 @@ public class RegistrationController {
         if (validators.validate(registerDTO)) {
             //return confirmation
             UserCredentialDTO newUser = userService.regiserUser(registerDTO);
-            //Role role = roleRepository.findByName("user");
             response.setStatus(ResponseStatus.OK);
             response.setResponseObject(newUser);
         } else {

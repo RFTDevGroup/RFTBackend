@@ -54,4 +54,16 @@ public class UserServiceImpl implements UserService {
         User saved = userRepository.save(userToSave);
         return modelMapper.map(saved, UserCredentialDTO.class);
     }
+
+    @Override
+    public boolean deleteUser(long id) {
+        if(id == 0) return false;
+
+        User userToBeDeleted = userRepository.findOne(id);
+        if(userToBeDeleted == null) return false;
+
+        userRepository.delete(userToBeDeleted);
+
+        return true;
+    }
 }
