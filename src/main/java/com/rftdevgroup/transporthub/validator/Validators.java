@@ -10,9 +10,12 @@ public class Validators {
     @Autowired
     private List<Validator> validators;
 
-    public void test() {
+    public boolean validate(Object o) {
         for (Validator validator : validators) {
-            System.out.println("found");
+            if(validator.isSupported(o.getClass())){
+                return validator.isValid(o);
+            }
         }
+        return false;
     }
 }

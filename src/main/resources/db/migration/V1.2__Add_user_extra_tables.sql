@@ -1,5 +1,5 @@
 CREATE TABLE address (
-  aid BIGINT NOT NULL PRIMARY KEY,
+  aid BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   city VARCHAR(100),
   country VARCHAR(100),
   house_no VARCHAR(100),
@@ -8,7 +8,7 @@ CREATE TABLE address (
 );
 
 CREATE TABLE user_details (
-  udid BIGINT NOT NULL PRIMARY KEY,
+  udid BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   email VARCHAR(255),
   first_name VARCHAR(255),
   last_name VARCHAR(255),

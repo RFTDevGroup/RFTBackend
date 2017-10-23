@@ -20,7 +20,6 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private long id;
 
     @NonNull
@@ -29,5 +28,11 @@ public class Role {
     @Override
     public String toString() {
         return "ROLE_" + name.toUpperCase();
+    }
+
+    public static Role byName(String name){
+        Role role = new Role();
+        role.setName(name);
+        return role;
     }
 }

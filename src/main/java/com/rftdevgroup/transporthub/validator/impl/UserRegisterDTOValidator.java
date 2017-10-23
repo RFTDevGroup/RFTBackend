@@ -9,7 +9,7 @@ public class UserRegisterDTOValidator implements Validator{
     @Override
     public boolean isValid(Object o) {
         UserRegisterDTO registerDTO = (UserRegisterDTO) o;
-        return registerDTO.getName().length() > 5;
+        return registerDTO.getUserName().length() > 5;
     }
 
     @Override

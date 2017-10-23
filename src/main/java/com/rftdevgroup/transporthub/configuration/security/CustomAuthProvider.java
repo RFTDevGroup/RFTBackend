@@ -1,9 +1,6 @@
 package com.rftdevgroup.transporthub.configuration.security;
 
 import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
-import com.rftdevgroup.transporthub.data.model.user.Role;
-import com.rftdevgroup.transporthub.data.model.user.User;
-import com.rftdevgroup.transporthub.data.repository.UserRepository;
 import com.rftdevgroup.transporthub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -27,13 +24,15 @@ public class CustomAuthProvider implements AuthenticationProvider {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
         Optional<UserCredentialDTO> user = userService.findAndMapUser(username, UserCredentialDTO.class);
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         if (user.isPresent() && encoder.matches(password, user.get().getPassword())) {
             //Get authorities

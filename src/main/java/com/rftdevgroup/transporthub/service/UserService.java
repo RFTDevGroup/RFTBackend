@@ -1,7 +1,10 @@
 package com.rftdevgroup.transporthub.service;
 
+import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
 import com.rftdevgroup.transporthub.data.dto.UserDTO;
+import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
 import com.rftdevgroup.transporthub.data.model.user.User;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,4 +27,6 @@ public interface UserService {
      * @return an {@link Optional} containing the mapped user if the user exists
      */
     <T> Optional<T> findAndMapUser(String username, Class<T> mapTo);
+
+    UserCredentialDTO regiserUser(UserRegisterDTO registerDTO);
 }
