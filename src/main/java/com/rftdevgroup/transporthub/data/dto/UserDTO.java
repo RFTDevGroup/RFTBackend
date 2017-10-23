@@ -13,11 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    long id;
-    String userName;
-    String firstName;
-    String lastName;
-    String email;
-    String address;
-    List<String> roles;
+    private long id;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String address;
+    private List<String> roles;
 }
