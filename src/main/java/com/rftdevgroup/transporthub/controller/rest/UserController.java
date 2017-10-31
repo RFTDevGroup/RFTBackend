@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import javax.swing.text.html.Option;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -72,6 +73,21 @@ public class UserController {
             }
         } else {
             return new Response(ResponseStatus.INTERNAL_ERROR, "No active user is present.");
+        }
+    }
+
+    @Secured(ADMIN)
+    @RequestMapping(value = "/user/{id}/update", method = RequestMethod.PUT)
+    public Response updateUser(@PathVariable("id") long id, @RequestBody UserUpdateDTO updateDTO){
+        Optional<ValidationErrors> errors = validators.validate(updateDTO);
+        if(errors.isPresent()){
+            return new Response(ResponseStatus.VALIDATION_ERROR, errors.get());
+        }
+        UserDTO updatedUser = userService.updateUser(id, updateDTO);
+        if(updatedUser == null){
+            return new Response(ResponseStatus.INTERNAL_ERROR, "User not found with given id.");
+        } else {
+            return new Response(ResponseStatus.OK, updatedUser);
         }
     }
 
