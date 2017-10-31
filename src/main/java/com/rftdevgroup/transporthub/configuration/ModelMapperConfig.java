@@ -26,6 +26,7 @@ public class ModelMapperConfig {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        setTypeMapForUserRegisterDTO(modelMapper);
         return modelMapper;
     }
 

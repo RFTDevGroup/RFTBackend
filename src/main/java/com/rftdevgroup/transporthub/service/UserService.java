@@ -3,6 +3,7 @@ package com.rftdevgroup.transporthub.service;
 import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
 import com.rftdevgroup.transporthub.data.dto.UserDTO;
 import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
+import com.rftdevgroup.transporthub.data.dto.UserUpdateDTO;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -31,4 +32,6 @@ public interface UserService {
     UserCredentialDTO regiserUser(UserRegisterDTO registerDTO);
 
     boolean deleteUser(long id);
+
+    UserDTO updateUser(long id, UserUpdateDTO updateDTO);
 }

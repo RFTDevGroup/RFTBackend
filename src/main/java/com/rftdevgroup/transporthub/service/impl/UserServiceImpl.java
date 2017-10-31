@@ -3,6 +3,7 @@ package com.rftdevgroup.transporthub.service.impl;
 import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
 import com.rftdevgroup.transporthub.data.dto.UserDTO;
 import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
+import com.rftdevgroup.transporthub.data.dto.UserUpdateDTO;
 import com.rftdevgroup.transporthub.data.model.user.Role;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.RoleRepository;
@@ -58,13 +59,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteUser(long id) {
-        if(id == 0) return false;
+        if (id == 0) return false;
 
         User userToBeDeleted = userRepository.findOne(id);
-        if(userToBeDeleted == null) return false;
+        if (userToBeDeleted == null) return false;
 
         userRepository.delete(userToBeDeleted);
 
         return true;
+    }
+
+    @Override
+    public UserDTO updateUser(long id, UserUpdateDTO updateDTO) {
+        Assert.notNull(updateDTO, "User update dto must not be null.");
+        User userToUpdate = userRepository.findOne(id);
+        if (userToUpdate != null) {
+            modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+            modelMapper.map(updateDTO, userToUpdate.getDetails());
+            modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+            User saved = userRepository.save(userToUpdate);
+            return modelMapper.map(saved, UserDTO.class);
+        }
+        return null;
     }
 }
