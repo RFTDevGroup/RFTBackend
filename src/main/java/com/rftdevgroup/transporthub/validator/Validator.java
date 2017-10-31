@@ -1,6 +1,8 @@
 package com.rftdevgroup.transporthub.validator;
 
+import java.util.Optional;
+
 public interface Validator {
-    boolean isValid(Object o);
+    Optional<ValidationErrors> validate(Object o);
     boolean isSupported(Class c);
 }
