@@ -7,6 +7,8 @@ import com.rftdevgroup.transporthub.data.dto.UserUpdateDTO;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.UserRepository;
 import com.rftdevgroup.transporthub.service.UserService;
+import com.rftdevgroup.transporthub.validator.ValidationErrors;
+import com.rftdevgroup.transporthub.validator.Validators;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,9 +32,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private UserRepository repository;
-    @Autowired
-    private ModelMapper modelMapper;
+    private Validators validators;
 
     @Value("${something.value}")
     private String test;
@@ -58,6 +58,10 @@ public class UserController {
     @Secured(USER)
     @RequestMapping(value = "/user/update", method = RequestMethod.PUT)
     public Response updateSelf(Principal principal, @RequestBody UserUpdateDTO updateDTO) {
+        Optional<ValidationErrors> errors = validators.validate(updateDTO);
+        if(errors.isPresent()){
+            return new Response(ResponseStatus.VALIDATION_ERROR, errors.get());
+        }
         Optional<UserDTO> activeUser = userService.findAndMapUser(principal.getName(), UserDTO.class);
         if (activeUser.isPresent()) {
             UserDTO updatedUser = userService.updateUser(activeUser.get().getId(), updateDTO);

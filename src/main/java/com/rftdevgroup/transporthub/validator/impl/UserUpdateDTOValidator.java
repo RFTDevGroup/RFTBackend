@@ -10,9 +10,26 @@ import java.util.Optional;
 public class UserUpdateDTOValidator implements Validator {
     @Override
     public Optional<ValidationErrors> validate(Object o) {
+        UserUpdateDTO updateDTO = (UserUpdateDTO) o;
         ValidationErrors errors = new ValidationErrors();
-        errors.addFieldError("asd","blah blah");
-        return Optional.of(errors);
+
+        if(updateDTO.getFirstName() != null && updateDTO.getFirstName().isEmpty()){
+            errors.addFieldError("firstName", "First Name is empty.");
+        }
+
+        if(updateDTO.getLastName() != null && updateDTO.getLastName().isEmpty()){
+            errors.addFieldError("lastName", "Last Name is empty.");
+        }
+
+        if(updateDTO.getEmail() != null && updateDTO.getEmail().isEmpty()){
+            errors.addFieldError("email", "Email is empty.");
+        }
+
+        if(updateDTO.getUserName() != null && updateDTO.getUserName().isEmpty()){
+            errors.addFieldError("userName", "User name is empty.");
+        }
+
+        return errors.getErrors().isEmpty() ? Optional.empty() : Optional.of(errors);
     }
 
     @Override
