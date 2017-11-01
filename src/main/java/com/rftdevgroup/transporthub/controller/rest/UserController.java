@@ -35,9 +35,6 @@ public class UserController {
     @Autowired
     private Validators validators;
 
-    @Value("${something.value}")
-    private String test;
-
     @Secured(ADMIN)
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<UserDTO> users() {
