@@ -1,4 +1,4 @@
-package com.rftdevgroup.transporthub.data.model;
+package com.rftdevgroup.transporthub.data.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +20,15 @@ public class User {
     private String userName;
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private List<Role> roles;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "udid")
+    private UserDetails details;
 }

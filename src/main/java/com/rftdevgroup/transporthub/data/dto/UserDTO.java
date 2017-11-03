@@ -1,19 +1,23 @@
 package com.rftdevgroup.transporthub.data.dto;
 
+import com.rftdevgroup.transporthub.data.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Simple DTO for the {@link com.rftdevgroup.transporthub.data.model.User}.
+ * Detailed DTO containing extra information for the {@link User}.
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    long id;
-    String userName;
-    String password;
-    List<String> roles;
+    private long id;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String address;
+    private List<String> roles;
 }
