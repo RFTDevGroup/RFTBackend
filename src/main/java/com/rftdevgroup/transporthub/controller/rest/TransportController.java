@@ -1,8 +1,9 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
-import com.rftdevgroup.transporthub.data.model.transport.Transport;
-import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
+import com.rftdevgroup.transporthub.data.dto.transport.TransportDTO;
+import com.rftdevgroup.transporthub.service.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -12,11 +13,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping(value = "/api/transport")
 public class TransportController {
 
-    @Autowired
-    private TransportRepository transportRepository;
+    private static final String ADMIN = "ROLE_ADMIN";
+    private static final String USER = "ROLE_USER";
 
+    @Autowired
+    private TransportService transportService;
+
+    @Secured(USER)
     @RequestMapping(value = "/", method = GET)
-    public List<Transport> getTransports() {
-        return transportRepository.findAll();
+    public List<TransportDTO> transports() {
+        return transportService.listTransports();
     }
 }
