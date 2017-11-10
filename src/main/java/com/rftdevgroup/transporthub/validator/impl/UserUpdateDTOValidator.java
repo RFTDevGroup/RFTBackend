@@ -1,6 +1,6 @@
 package com.rftdevgroup.transporthub.validator.impl;
 
-import com.rftdevgroup.transporthub.data.dto.UserUpdateDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserUpdateDTO;
 import com.rftdevgroup.transporthub.validator.ValidationErrors;
 import com.rftdevgroup.transporthub.validator.Validator;
 import org.springframework.stereotype.Component;

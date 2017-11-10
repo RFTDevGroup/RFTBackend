@@ -1,4 +1,4 @@
-package com.rftdevgroup.transporthub.data.dto;
+package com.rftdevgroup.transporthub.data.dto.user;
 
 import com.rftdevgroup.transporthub.data.model.user.User;
 import lombok.AllArgsConstructor;

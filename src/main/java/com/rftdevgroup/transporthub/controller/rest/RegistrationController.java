@@ -2,8 +2,8 @@ package com.rftdevgroup.transporthub.controller.rest;
 
 import com.rftdevgroup.transporthub.controller.response.Response;
 import com.rftdevgroup.transporthub.controller.response.ResponseStatus;
-import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
-import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserCredentialDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserRegisterDTO;
 import com.rftdevgroup.transporthub.service.UserService;
 import com.rftdevgroup.transporthub.validator.ValidationErrors;
 import com.rftdevgroup.transporthub.validator.Validators;

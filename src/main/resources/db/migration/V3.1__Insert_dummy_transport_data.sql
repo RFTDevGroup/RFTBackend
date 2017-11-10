@@ -1,0 +1,2 @@
+INSERT INTO transport (id, owner, cargo, place_of_load, time_of_load, place_of_unload, time_of_unload, starting_price, current_price) VALUES (1, 1, 1, 1, CURRENT_TIMESTAMP , 2, CURRENT_TIMESTAMP, 2500, 1000);
+INSERT INTO cargo (cid) VALUES (1);
