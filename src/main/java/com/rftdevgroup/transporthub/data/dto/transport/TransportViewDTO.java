@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransportDTO {
+public class TransportViewDTO {
     private String userName;
     private String placeOfLoad;
     private String placeOfUnload;

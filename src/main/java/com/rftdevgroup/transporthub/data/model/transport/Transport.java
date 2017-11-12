@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -28,12 +28,12 @@ public class Transport {
     @ManyToOne
     @JoinColumn(name = "place_of_load")
     private Address placeOfLoad;
-    private Date timeOfLoad;
+    private LocalDate timeOfLoad;
 
     @ManyToOne
     @JoinColumn(name = "place_of_unload")
     private Address placeOfUnload;
-    private Date timeOfUnload;
+    private LocalDate timeOfUnload;
 
     private int startingPrice;
     private int currentPrice;

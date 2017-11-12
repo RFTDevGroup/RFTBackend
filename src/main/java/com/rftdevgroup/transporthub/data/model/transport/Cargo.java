@@ -15,4 +15,10 @@ public class Cargo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cid")
     private long id;
+    private String name;
+    private String description;
+    private long weight;
+    private double width;
+    private double height;
+    private double depth;
 }
