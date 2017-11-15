@@ -1,6 +1,5 @@
 package com.rftdevgroup.transporthub.data.dto.transport;
 
-import com.rftdevgroup.transporthub.data.model.transport.Cargo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransportViewDTO {
-    private String userName;
-    private Cargo cargo;
+public class TransportListViewDTO {
+    private String cargoName;
+    private String cityFrom;
+    private String cityTo;
+    private String description;
+    private String daysRemaining;
+    private String owner;
     private int currentPrice;
 }

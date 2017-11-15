@@ -1,5 +1,6 @@
 package com.rftdevgroup.transporthub.service.impl;
 
+import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportViewDTO;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
 import com.rftdevgroup.transporthub.service.TransportService;
@@ -19,7 +20,19 @@ public class TransportServiceImpl implements TransportService {
     private ModelMapper modelMapper;
 
     @Override
-    public Page<TransportViewDTO> listTransports(Pageable pageable) {
-        return transportRepository.findAll(pageable).map(t -> modelMapper.map(t, TransportViewDTO.class));
+    public Page<TransportListViewDTO> listTransports(Pageable pageable) {
+        return transportRepository.findAll(pageable).map(transport -> {
+            TransportListViewDTO listViewDTO = new TransportListViewDTO();
+
+            //Map transport to dto
+            listViewDTO.setCargoName(transport.getCargo().getName());
+            listViewDTO.setCityFrom(transport.getPlaceOfLoad().getCity());
+            listViewDTO.setCityTo(transport.getPlaceOfUnload().getCity());
+            listViewDTO.setDescription(transport.getCargo().getDescription());
+            listViewDTO.setOwner(transport.getOwner().getUserName());
+            listViewDTO.setCurrentPrice(transport.getCurrentPrice());
+
+            return listViewDTO;
+        });
     }
 }

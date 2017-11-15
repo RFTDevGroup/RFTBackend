@@ -1,5 +1,6 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
+import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportViewDTO;
 import com.rftdevgroup.transporthub.data.model.transport.Transport;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
@@ -25,15 +26,15 @@ public class TransportController {
     @Autowired
     private TransportRepository repository;
 
-    @Secured(USER)
-    @RequestMapping(value = "/", method = GET)
-    public Page<TransportViewDTO> transports(Pageable pageable) {
-        return transportService.listTransports(pageable);
-    }
-
     @Secured(ADMIN)
     @RequestMapping(value = "/details", method = GET)
     public Page<Transport> transportPage(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    @Secured(USER)
+    @RequestMapping(value = "/", method = GET)
+    public Page<TransportListViewDTO> transportList(Pageable pageable) {
+        return transportService.listTransports(pageable);
     }
 }

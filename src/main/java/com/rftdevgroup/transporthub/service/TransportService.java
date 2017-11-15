@@ -1,9 +1,9 @@
 package com.rftdevgroup.transporthub.service;
 
-import com.rftdevgroup.transporthub.data.dto.transport.TransportViewDTO;
+import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface TransportService {
-    Page<TransportViewDTO> listTransports(Pageable pageable);
+    Page<TransportListViewDTO> listTransports(Pageable pageable);
 }
