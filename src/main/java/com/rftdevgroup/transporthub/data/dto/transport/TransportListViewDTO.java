@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransportListViewDTO {
+    private long id;
     private String cargoName;
     private String cityFrom;
     private String cityTo;

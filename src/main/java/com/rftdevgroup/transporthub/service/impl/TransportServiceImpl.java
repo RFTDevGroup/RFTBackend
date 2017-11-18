@@ -1,14 +1,18 @@
 package com.rftdevgroup.transporthub.service.impl;
 
+import com.rftdevgroup.transporthub.data.dto.transport.TransportCreateDTO;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
-import com.rftdevgroup.transporthub.data.dto.transport.TransportViewDTO;
+import com.rftdevgroup.transporthub.data.model.transport.Transport;
+import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
 import com.rftdevgroup.transporthub.service.TransportService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -27,6 +31,7 @@ public class TransportServiceImpl implements TransportService {
             TransportListViewDTO listViewDTO = new TransportListViewDTO();
 
             //Map transport to dto
+            listViewDTO.setId(transport.getId());
             listViewDTO.setCargoName(transport.getCargo().getName());
             listViewDTO.setCityFrom(transport.getPlaceOfLoad().getCity());
             listViewDTO.setCityTo(transport.getPlaceOfUnload().getCity());
@@ -37,5 +42,37 @@ public class TransportServiceImpl implements TransportService {
 
             return listViewDTO;
         });
+    }
+
+    @Override
+    public boolean save(TransportCreateDTO createDTO, User owner) {
+        Assert.notNull(createDTO, "Transport create dto must not be null!");
+
+        Transport transportToSave = new Transport();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.map(createDTO, transportToSave);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+
+        transportToSave.setOwner(owner);
+        transportToSave.setCurrentPrice(transportToSave.getStartingPrice());
+        Transport saved = transportRepository.save(transportToSave);
+        return saved != null;
+    }
+
+    @Override
+    public boolean delete(long id, User user) {
+        Transport transportToDelete = transportRepository.findOne(id);
+        if(transportToDelete != null && transportToDelete.getOwner().equals(user)){
+            transportRepository.delete(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean adminDelete(long id) {
+        transportRepository.delete(id);
+        return true;
     }
 }

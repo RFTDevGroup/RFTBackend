@@ -20,17 +20,17 @@ public class Transport {
     @ManyToOne
     @JoinColumn(name = "owner")
     private User owner;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "cargo")
     private Cargo cargo;
 
     //possible new class
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "place_of_load")
     private Address placeOfLoad;
     private LocalDate timeOfLoad;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "place_of_unload")
     private Address placeOfUnload;
     private LocalDate timeOfUnload;

@@ -5,21 +5,23 @@ import com.rftdevgroup.transporthub.controller.response.ResponseStatus;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportCreateDTO;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
 import com.rftdevgroup.transporthub.data.model.transport.Transport;
+import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
 import com.rftdevgroup.transporthub.service.TransportService;
+import com.rftdevgroup.transporthub.service.UserService;
 import com.rftdevgroup.transporthub.validator.ValidationErrors;
 import com.rftdevgroup.transporthub.validator.Validators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.Optional;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping(value = "/api/transport")
@@ -30,6 +32,9 @@ public class TransportController {
 
     @Autowired
     private TransportService transportService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private TransportRepository repository;
@@ -59,9 +64,37 @@ public class TransportController {
             return new Response(ResponseStatus.VALIDATION_ERROR, error.get());
         }
 
+        Optional<User> owner = userService.findAndMapUser(principal.getName(), User.class);
 
-        response.setResponseObject(transportCreateDTO);
-        response.setStatus(ResponseStatus.OK);
+        if (owner.isPresent() && transportService.save(transportCreateDTO, owner.get())) {
+            response.setResponseObject(true);
+            response.setStatus(ResponseStatus.OK);
+        } else {
+            response.setResponseObject(false);
+            response.setStatus(ResponseStatus.INTERNAL_ERROR);
+        }
+
         return response;
+    }
+
+    @Secured(USER)
+    @RequestMapping(value = "/{id}", method = DELETE)
+    public Response userDeleteTransport(@PathVariable("id") long id, Principal principal) {
+        Optional<User> user = userService.findAndMapUser(principal.getName(), User.class);
+        if (user.isPresent() && transportService.delete(id, user.get())) {
+            return new Response(ResponseStatus.OK, true);
+        } else {
+            return new Response(ResponseStatus.INTERNAL_ERROR, false);
+        }
+    }
+
+    @Secured(ADMIN)
+    @RequestMapping(value = "/{id}/admin", method = DELETE)
+    public Response adminDeleteTransport(@PathVariable("id") long id) {
+        if (transportService.adminDelete(id)) {
+            return new Response(ResponseStatus.OK, true);
+        } else {
+            return new Response(ResponseStatus.INTERNAL_ERROR, false);
+        }
     }
 }
