@@ -67,10 +67,10 @@ public class TransportController {
         Optional<User> owner = userService.findAndMapUser(principal.getName(), User.class);
 
         if (owner.isPresent() && transportService.save(transportCreateDTO, owner.get())) {
-            response.setResponseObject(true);
+            response.setResponseObject("New transport added.");
             response.setStatus(ResponseStatus.OK);
         } else {
-            response.setResponseObject(false);
+            response.setResponseObject("Failed to add new transport.");
             response.setStatus(ResponseStatus.INTERNAL_ERROR);
         }
 
@@ -82,9 +82,9 @@ public class TransportController {
     public Response userDeleteTransport(@PathVariable("id") long id, Principal principal) {
         Optional<User> user = userService.findAndMapUser(principal.getName(), User.class);
         if (user.isPresent() && transportService.delete(id, user.get())) {
-            return new Response(ResponseStatus.OK, true);
+            return new Response(ResponseStatus.OK, "Transport deleted.");
         } else {
-            return new Response(ResponseStatus.INTERNAL_ERROR, false);
+            return new Response(ResponseStatus.INTERNAL_ERROR, "Failed to delete transport.");
         }
     }
 
@@ -92,9 +92,9 @@ public class TransportController {
     @RequestMapping(value = "/{id}/admin", method = DELETE)
     public Response adminDeleteTransport(@PathVariable("id") long id) {
         if (transportService.adminDelete(id)) {
-            return new Response(ResponseStatus.OK, true);
+            return new Response(ResponseStatus.OK, "Transport deleted.");
         } else {
-            return new Response(ResponseStatus.INTERNAL_ERROR, false);
+            return new Response(ResponseStatus.INTERNAL_ERROR, "Failed to delete transport.");
         }
     }
 }
