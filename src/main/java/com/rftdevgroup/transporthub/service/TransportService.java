@@ -6,4 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface TransportService {
     Page<TransportListViewDTO> listTransports(Pageable pageable);
+
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class TransportServiceImpl implements TransportService {
@@ -31,6 +33,7 @@ public class TransportServiceImpl implements TransportService {
             listViewDTO.setDescription(transport.getCargo().getDescription());
             listViewDTO.setOwner(transport.getOwner().getUserName());
             listViewDTO.setCurrentPrice(transport.getCurrentPrice());
+            listViewDTO.setDaysRemaining(ChronoUnit.DAYS.between(LocalDate.now(), transport.getTimeOfLoad()));
 
             return listViewDTO;
         });

@@ -12,7 +12,7 @@ public class TransportListViewDTO {
     private String cityFrom;
     private String cityTo;
     private String description;
-    private String daysRemaining;
+    private long daysRemaining;
     private String owner;
     private int currentPrice;
 }
