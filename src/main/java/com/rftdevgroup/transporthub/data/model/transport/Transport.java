@@ -43,4 +43,8 @@ public class Transport {
     @OneToMany(mappedBy = "transport")
     @JsonManagedReference
     private List<Bid> bids;
+
+    public int getCurrentPrice() {
+        return bids.stream().mapToInt(b -> b.getAmount()).min().getAsInt();
+    }
 }
