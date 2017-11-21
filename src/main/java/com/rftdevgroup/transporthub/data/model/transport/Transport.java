@@ -1,5 +1,7 @@
 package com.rftdevgroup.transporthub.data.model.transport;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.rftdevgroup.transporthub.data.model.auction.Bid;
 import com.rftdevgroup.transporthub.data.model.user.Address;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import lombok.AllArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -36,5 +39,8 @@ public class Transport {
     private LocalDate timeOfUnload;
 
     private int startingPrice;
-    private int currentPrice;
+
+    @OneToMany(mappedBy = "transport")
+    @JsonManagedReference
+    private List<Bid> bids;
 }

@@ -6,8 +6,7 @@ CREATE TABLE transport (
   time_of_load DATE,
   place_of_unload BIGINT,
   time_of_unload DATE,
-  starting_price INT,
-  current_price INT
+  starting_price INT
 );
 
 CREATE TABLE cargo (
