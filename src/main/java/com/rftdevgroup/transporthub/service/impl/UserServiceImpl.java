@@ -1,15 +1,14 @@
 package com.rftdevgroup.transporthub.service.impl;
 
-import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
-import com.rftdevgroup.transporthub.data.dto.UserDTO;
-import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
-import com.rftdevgroup.transporthub.data.dto.UserUpdateDTO;
-import com.rftdevgroup.transporthub.data.model.user.Address;
+import com.rftdevgroup.transporthub.data.dto.user.UserCredentialDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserRegisterDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserUpdateDTO;
 import com.rftdevgroup.transporthub.data.model.user.Role;
 import com.rftdevgroup.transporthub.data.model.user.User;
-import com.rftdevgroup.transporthub.data.repository.AddressRepository;
-import com.rftdevgroup.transporthub.data.repository.RoleRepository;
-import com.rftdevgroup.transporthub.data.repository.UserRepository;
+import com.rftdevgroup.transporthub.data.repository.user.AddressRepository;
+import com.rftdevgroup.transporthub.data.repository.user.RoleRepository;
+import com.rftdevgroup.transporthub.data.repository.user.UserRepository;
 import com.rftdevgroup.transporthub.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

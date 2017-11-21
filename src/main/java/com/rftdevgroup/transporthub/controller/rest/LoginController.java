@@ -1,20 +1,17 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
-import com.rftdevgroup.transporthub.data.dto.UserDTO;
-import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
-import com.rftdevgroup.transporthub.data.dto.UserUpdateDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserUpdateDTO;
 import com.rftdevgroup.transporthub.data.model.user.Address;
 import com.rftdevgroup.transporthub.data.model.user.Role;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.model.user.UserDetails;
-import com.rftdevgroup.transporthub.data.repository.AddressRepository;
-import com.rftdevgroup.transporthub.data.repository.RoleRepository;
-import com.rftdevgroup.transporthub.data.repository.UserDetailsRepository;
+import com.rftdevgroup.transporthub.data.repository.user.AddressRepository;
+import com.rftdevgroup.transporthub.data.repository.user.RoleRepository;
+import com.rftdevgroup.transporthub.data.repository.user.UserDetailsRepository;
 import com.rftdevgroup.transporthub.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

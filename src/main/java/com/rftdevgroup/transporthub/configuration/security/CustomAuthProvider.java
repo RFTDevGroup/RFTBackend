@@ -1,6 +1,6 @@
 package com.rftdevgroup.transporthub.configuration.security;
 
-import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserCredentialDTO;
 import com.rftdevgroup.transporthub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

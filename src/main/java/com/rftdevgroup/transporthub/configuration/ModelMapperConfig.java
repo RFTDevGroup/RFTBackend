@@ -1,6 +1,6 @@
 package com.rftdevgroup.transporthub.configuration;
 
-import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserRegisterDTO;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import org.modelmapper.Conditions;
 import org.modelmapper.Converter;

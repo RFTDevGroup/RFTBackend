@@ -1,11 +1,10 @@
 package com.rftdevgroup.transporthub.service;
 
-import com.rftdevgroup.transporthub.data.dto.UserCredentialDTO;
-import com.rftdevgroup.transporthub.data.dto.UserDTO;
-import com.rftdevgroup.transporthub.data.dto.UserRegisterDTO;
-import com.rftdevgroup.transporthub.data.dto.UserUpdateDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserCredentialDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserRegisterDTO;
+import com.rftdevgroup.transporthub.data.dto.user.UserUpdateDTO;
 import com.rftdevgroup.transporthub.data.model.user.User;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
