@@ -7,6 +7,8 @@ import com.rftdevgroup.transporthub.data.repository.auction.BidRepository;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
 import com.rftdevgroup.transporthub.data.repository.user.UserRepository;
 import com.rftdevgroup.transporthub.service.AuctionService;
+import com.rftdevgroup.transporthub.service.impl.errors.AuctionError;
+import com.rftdevgroup.transporthub.service.impl.errors.InvalidAmountError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -24,10 +26,10 @@ public class AuctionServiceImpl implements AuctionService {
     private UserRepository userRepository;
 
     @Override
-    public boolean makeBid(long transportId, int amount, String username) {
+    public boolean makeBid(long transportId, int amount, String username) throws AuctionError{
         Transport transport = transportRepository.findOne(transportId);
         if (transport == null) return false;
-        if (amount >= transport.getCurrentPrice()) return false;
+        if (amount >= transport.getCurrentPrice()) throw new InvalidAmountError();
         Bid bid = new Bid();
         Optional<User> bidder = userRepository.findUserByUserName(username);
         if (!bidder.isPresent()) return false;

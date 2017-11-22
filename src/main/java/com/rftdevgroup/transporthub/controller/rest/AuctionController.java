@@ -6,6 +6,7 @@ import com.rftdevgroup.transporthub.data.dto.auction.PlaceBidDTO;
 import com.rftdevgroup.transporthub.data.model.auction.Bid;
 import com.rftdevgroup.transporthub.data.repository.auction.BidRepository;
 import com.rftdevgroup.transporthub.service.AuctionService;
+import com.rftdevgroup.transporthub.service.impl.errors.AuctionError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +35,11 @@ public class AuctionController {
     @Secured(USER)
     @RequestMapping(value = "/transport/{id}/bid", method = RequestMethod.POST)
     public Response makeBid(@PathVariable("id") long transportId, @RequestBody PlaceBidDTO bidDTO, Principal principal) {
-        if (auctionService.makeBid(transportId, bidDTO.getAmount(), principal.getName())) {
+        try {
+            auctionService.makeBid(transportId, bidDTO.getAmount(), principal.getName());
             return new Response(ResponseStatus.OK, "Bid placed.");
-        } else {
-            return new Response(ResponseStatus.INTERNAL_ERROR, "Cannot place bid on selected transport.");
+        } catch (AuctionError auerr) {
+            return new Response(ResponseStatus.INTERNAL_ERROR, auerr);
         }
     }
 }
