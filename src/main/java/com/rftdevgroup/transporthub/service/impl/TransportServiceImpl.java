@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 @Service
 public class TransportServiceImpl implements TransportService {
@@ -37,7 +38,7 @@ public class TransportServiceImpl implements TransportService {
             listViewDTO.setCityTo(transport.getPlaceOfUnload().getCity());
             listViewDTO.setDescription(transport.getCargo().getDescription());
             listViewDTO.setOwner(transport.getOwner().getUserName());
-            listViewDTO.setCurrentPrice(transport.getBids().stream().mapToInt(b->b.getAmount()).min().getAsInt());
+            listViewDTO.setCurrentPrice(transport.getBids().stream().mapToInt(b -> b.getAmount()).min().getAsInt());
             listViewDTO.setDaysRemaining(ChronoUnit.DAYS.between(LocalDate.now(), transport.getTimeOfLoad()));
 
             return listViewDTO;
@@ -61,7 +62,7 @@ public class TransportServiceImpl implements TransportService {
     @Override
     public boolean delete(long id, User user) {
         Transport transportToDelete = transportRepository.findOne(id);
-        if(transportToDelete != null && transportToDelete.getOwner().equals(user)){
+        if (transportToDelete != null && transportToDelete.getOwner().equals(user)) {
             transportRepository.delete(id);
             return true;
         } else {
@@ -73,5 +74,11 @@ public class TransportServiceImpl implements TransportService {
     public boolean adminDelete(long id) {
         transportRepository.delete(id);
         return true;
+    }
+
+    @Override
+    public <T> Optional<T> findAndMapTransport(long id, Class<T> mapTo) {
+        Transport transport = transportRepository.findOne(id);
+        return transport == null ? Optional.empty() : Optional.of(modelMapper.map(transport, mapTo));
     }
 }
