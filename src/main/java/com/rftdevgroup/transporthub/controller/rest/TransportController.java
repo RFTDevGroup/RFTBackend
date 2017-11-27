@@ -3,6 +3,7 @@ package com.rftdevgroup.transporthub.controller.rest;
 import com.rftdevgroup.transporthub.controller.response.Response;
 import com.rftdevgroup.transporthub.controller.response.ResponseStatus;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportCreateDTO;
+import com.rftdevgroup.transporthub.data.dto.transport.TransportDetailsDTO;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
 import com.rftdevgroup.transporthub.data.model.transport.Transport;
 import com.rftdevgroup.transporthub.data.model.user.User;
@@ -96,5 +97,12 @@ public class TransportController {
         } else {
             return new Response(ResponseStatus.INTERNAL_ERROR, "Failed to delete transport.");
         }
+    }
+
+    @Secured(USER)
+    @RequestMapping(value = "/{id}", method = GET)
+    public Response getTransportDetails(@PathVariable("id") long id) {
+        Optional<TransportDetailsDTO> detailsDTO = transportService.findAndMapTransport(id, TransportDetailsDTO.class);
+        return detailsDTO.isPresent() ? new Response(ResponseStatus.OK, detailsDTO.get()) : new Response(ResponseStatus.INTERNAL_ERROR, "No transport found!");
     }
 }
