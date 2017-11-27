@@ -31,4 +31,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "udid")
     private UserDetails details;
+
+    @Override
+    public final String toString() {
+        return userName;
+    }
 }
