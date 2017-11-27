@@ -37,7 +37,7 @@ public class TransportServiceImpl implements TransportService {
             listViewDTO.setCityTo(transport.getPlaceOfUnload().getCity());
             listViewDTO.setDescription(transport.getCargo().getDescription());
             listViewDTO.setOwner(transport.getOwner().getUserName());
-            listViewDTO.setCurrentPrice(transport.getCurrentPrice());
+            listViewDTO.setCurrentPrice(transport.getBids().stream().mapToInt(b->b.getAmount()).min().getAsInt());
             listViewDTO.setDaysRemaining(ChronoUnit.DAYS.between(LocalDate.now(), transport.getTimeOfLoad()));
 
             return listViewDTO;
@@ -54,7 +54,6 @@ public class TransportServiceImpl implements TransportService {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
 
         transportToSave.setOwner(owner);
-        transportToSave.setCurrentPrice(transportToSave.getStartingPrice());
         Transport saved = transportRepository.save(transportToSave);
         return saved != null;
     }
