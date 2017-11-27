@@ -45,6 +45,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public <T> Optional<T> findAndMapUser(long id, Class<T> mapTo) {
+        User user = userRepository.findOne(id);
+        return user == null ? Optional.empty() : Optional.of(modelMapper.map(user, mapTo));
+    }
+
+    @Override
     public List<UserDTO> listUsers() {
         return userRepository.findAll().stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
