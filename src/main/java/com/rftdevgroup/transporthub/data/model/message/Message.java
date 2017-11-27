@@ -14,8 +14,8 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @OneToOne
-    @JoinColumn(name = "from")
-    private User from;
+    @JoinColumn(name = "sender")
+    private User sender;
     @OneToOne
     @JoinColumn(name = "to")
     private User to;
