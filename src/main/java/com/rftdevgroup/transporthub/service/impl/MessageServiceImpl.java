@@ -37,4 +37,16 @@ public class MessageServiceImpl implements MessageService {
         List<Message> messages = messageRepository.findAllByTo(user.get());
         return messages.stream().map(m -> modelMapper.map(m, MessageViewDTO.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public void sendSystemMessage(User to, String messageTopic, String messageBody) {
+        Message message = new Message();
+        message.setSender(null);
+        message.setRead(false);
+        message.setTo(to);
+        message.setTopic(messageTopic);
+        message.setBody(messageBody);
+
+        messageRepository.save(message);
+    }
 }

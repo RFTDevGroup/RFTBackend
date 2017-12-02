@@ -5,6 +5,7 @@ import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
 import com.rftdevgroup.transporthub.data.model.transport.Transport;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
+import com.rftdevgroup.transporthub.service.MessageService;
 import com.rftdevgroup.transporthub.service.TransportService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -22,6 +23,9 @@ public class TransportServiceImpl implements TransportService {
 
     @Autowired
     private TransportRepository transportRepository;
+
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -76,7 +80,11 @@ public class TransportServiceImpl implements TransportService {
 
     @Override
     public boolean adminDelete(long id) {
-        transportRepository.delete(id);
+        Transport transportToDelete = transportRepository.findOne(id);
+        if (transportToDelete == null) return false;
+        User owner = transportToDelete.getOwner();
+        messageService.sendSystemMessage(owner, "Transport deleted.", "Your transport has been deleted by the administrators.");
+        transportRepository.delete(transportToDelete);
         return true;
     }
 

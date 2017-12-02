@@ -1,9 +1,9 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
-import com.rftdevgroup.transporthub.controller.response.Response;
-import com.rftdevgroup.transporthub.controller.response.ResponseStatus;
 import com.rftdevgroup.transporthub.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +22,7 @@ public class MessageController {
 
     @Secured(USER)
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public Response getAllMessagesForUser(Principal principal) {
-        return new Response(ResponseStatus.OK, messageService.findMessagesFor(principal.getName()));
+    public ResponseEntity<?> getAllMessagesForUser(Principal principal) {
+        return new ResponseEntity<>(messageService.findMessagesFor(principal.getName()), HttpStatus.OK);
     }
 }
