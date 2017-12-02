@@ -1,7 +1,5 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
-import com.rftdevgroup.transporthub.controller.response.Response;
-import com.rftdevgroup.transporthub.controller.response.ResponseStatus;
 import com.rftdevgroup.transporthub.data.dto.auction.PlaceBidDTO;
 import com.rftdevgroup.transporthub.data.model.auction.Bid;
 import com.rftdevgroup.transporthub.data.repository.auction.BidRepository;
@@ -39,9 +37,9 @@ public class AuctionController {
     public ResponseEntity<?> makeBid(@PathVariable("id") long transportId, @RequestBody PlaceBidDTO bidDTO, Principal principal) {
         try {
             auctionService.makeBid(transportId, bidDTO.getAmount(), principal.getName());
-            return new ResponseEntity<Response>(new Response(ResponseStatus.OK, "Bid placed."), HttpStatus.OK);
+            return new ResponseEntity<>("Bid placed.", HttpStatus.OK);
         } catch (AuctionError auerr) {
-            return new ResponseEntity<Response>(new Response(ResponseStatus.INTERNAL_ERROR, auerr), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(auerr, HttpStatus.BAD_REQUEST);
         }
     }
 }

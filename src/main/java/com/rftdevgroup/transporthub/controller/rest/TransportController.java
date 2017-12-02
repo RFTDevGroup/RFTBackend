@@ -1,7 +1,5 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
-import com.rftdevgroup.transporthub.controller.response.Response;
-import com.rftdevgroup.transporthub.controller.response.ResponseStatus;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportCreateDTO;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportDetailsDTO;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
@@ -15,6 +13,8 @@ import com.rftdevgroup.transporthub.validator.Validators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,52 +57,47 @@ public class TransportController {
 
     @Secured(USER)
     @RequestMapping(value = "/new", method = POST)
-    public Response newTransport(@RequestBody TransportCreateDTO transportCreateDTO, Principal principal) {
-        Response response = new Response();
+    public ResponseEntity<?> newTransport(@RequestBody TransportCreateDTO transportCreateDTO, Principal principal) {
 
         Optional<ValidationErrors> error = validators.validate(transportCreateDTO);
         if (error.isPresent()) {
-            return new Response(ResponseStatus.VALIDATION_ERROR, error.get());
+            return new ResponseEntity<>(error.get().getErrors(), HttpStatus.BAD_REQUEST);
         }
 
         Optional<User> owner = userService.findAndMapUser(principal.getName(), User.class);
 
         if (owner.isPresent() && transportService.save(transportCreateDTO, owner.get())) {
-            response.setResponseObject("New transport added.");
-            response.setStatus(ResponseStatus.OK);
+            return new ResponseEntity<>("New transport added.", HttpStatus.OK);
         } else {
-            response.setResponseObject("Failed to add new transport.");
-            response.setStatus(ResponseStatus.INTERNAL_ERROR);
+            return new ResponseEntity<>("Failed to add new transport.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return response;
     }
 
     @Secured(USER)
     @RequestMapping(value = "/{id}", method = DELETE)
-    public Response userDeleteTransport(@PathVariable("id") long id, Principal principal) {
+    public ResponseEntity<?> userDeleteTransport(@PathVariable("id") long id, Principal principal) {
         Optional<User> user = userService.findAndMapUser(principal.getName(), User.class);
         if (user.isPresent() && transportService.delete(id, user.get())) {
-            return new Response(ResponseStatus.OK, "Transport deleted.");
+            return new ResponseEntity<>("Transport deleted.", HttpStatus.OK);
         } else {
-            return new Response(ResponseStatus.INTERNAL_ERROR, "Failed to delete transport.");
+            return new ResponseEntity<>("Failed to delete transport.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Secured(ADMIN)
     @RequestMapping(value = "/{id}/admin", method = DELETE)
-    public Response adminDeleteTransport(@PathVariable("id") long id) {
+    public ResponseEntity<?> adminDeleteTransport(@PathVariable("id") long id) {
         if (transportService.adminDelete(id)) {
-            return new Response(ResponseStatus.OK, "Transport deleted.");
+            return new ResponseEntity<>("Transport deleted.", HttpStatus.OK);
         } else {
-            return new Response(ResponseStatus.INTERNAL_ERROR, "Failed to delete transport.");
+            return new ResponseEntity<>("Failed to delete transport.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @Secured(USER)
     @RequestMapping(value = "/{id}", method = GET)
-    public Response getTransportDetails(@PathVariable("id") long id) {
+    public ResponseEntity<?> getTransportDetails(@PathVariable("id") long id) {
         Optional<TransportDetailsDTO> detailsDTO = transportService.findAndMapTransport(id, TransportDetailsDTO.class);
-        return detailsDTO.isPresent() ? new Response(ResponseStatus.OK, detailsDTO.get()) : new Response(ResponseStatus.INTERNAL_ERROR, "No transport found!");
+        return detailsDTO.isPresent() ? new ResponseEntity<>(detailsDTO.get(), HttpStatus.OK) : new ResponseEntity<>("Failed to get transport.", HttpStatus.BAD_REQUEST);
     }
 }
