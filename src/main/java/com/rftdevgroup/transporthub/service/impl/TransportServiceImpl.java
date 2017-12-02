@@ -38,7 +38,11 @@ public class TransportServiceImpl implements TransportService {
             listViewDTO.setCityTo(transport.getPlaceOfUnload().getCity());
             listViewDTO.setDescription(transport.getCargo().getDescription());
             listViewDTO.setOwner(transport.getOwner().getUserName());
-            listViewDTO.setCurrentPrice(transport.getBids().stream().mapToInt(b -> b.getAmount()).min().getAsInt());
+            if (transport.getBids().size() > 0) {
+                listViewDTO.setCurrentPrice(transport.getBids().stream().mapToInt(b -> b.getAmount()).min().getAsInt());
+            } else {
+                listViewDTO.setCurrentPrice(transport.getStartingPrice());
+            }
             listViewDTO.setDaysRemaining(ChronoUnit.DAYS.between(LocalDate.now(), transport.getTimeOfLoad()));
 
             return listViewDTO;

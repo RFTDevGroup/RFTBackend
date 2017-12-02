@@ -1,7 +1,5 @@
 package com.rftdevgroup.transporthub.controller.rest;
 
-import com.rftdevgroup.transporthub.controller.response.Response;
-import com.rftdevgroup.transporthub.controller.response.ResponseStatus;
 import com.rftdevgroup.transporthub.data.dto.user.UserDTO;
 import com.rftdevgroup.transporthub.data.dto.user.UserUpdateDTO;
 import com.rftdevgroup.transporthub.data.model.user.User;
@@ -9,6 +7,8 @@ import com.rftdevgroup.transporthub.service.UserService;
 import com.rftdevgroup.transporthub.validator.ValidationErrors;
 import com.rftdevgroup.transporthub.validator.Validators;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
@@ -40,68 +40,69 @@ public class UserController {
 
     @Secured(ADMIN)
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.DELETE)
-    public Response deleteUser(@PathVariable("userId") long userId, Principal principal) {
+    public ResponseEntity<?> deleteUser(@PathVariable("userId") long userId, Principal principal) {
         //delete user
         if (userService.deleteUser(userId)) {
-            return new Response(ResponseStatus.OK, principal.getName() + " deleted user id: " + userId);
+            String message = principal.getName() + " deleted user id: " + userId;
+            return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
-            return new Response(ResponseStatus.INTERNAL_ERROR, "Something went terribly wrong!");
+            String message = "Something went wrong!";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @Secured(USER)
     @RequestMapping(value = "/user/update", method = RequestMethod.PUT)
-    public Response updateSelf(Principal principal, @RequestBody UserUpdateDTO updateDTO) {
+    public ResponseEntity<?> updateSelf(Principal principal, @RequestBody UserUpdateDTO updateDTO) {
         Optional<ValidationErrors> errors = validators.validate(updateDTO);
         if (errors.isPresent()) {
-            return new Response(ResponseStatus.VALIDATION_ERROR, errors.get());
+            return new ResponseEntity<>(errors.get().getErrors(), HttpStatus.BAD_REQUEST);
         }
         Optional<UserDTO> activeUser = userService.findAndMapUser(principal.getName(), UserDTO.class);
         if (activeUser.isPresent()) {
             UserDTO updatedUser = userService.updateUser(activeUser.get().getId(), updateDTO);
             if (updateDTO != null) {
-                return new Response(ResponseStatus.OK, updatedUser);
+                return new ResponseEntity<>(updatedUser, HttpStatus.OK);
             } else {
-                return new Response(ResponseStatus.INTERNAL_ERROR, "Update process failed!");
+                return new ResponseEntity<>("Update failed!", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } else {
-            return new Response(ResponseStatus.INTERNAL_ERROR, "No active user is present.");
+            return new ResponseEntity<>("No active user is present!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Secured(ADMIN)
     @RequestMapping(value = "/user/{id}/update", method = RequestMethod.PUT)
-    public Response updateUser(@PathVariable("id") long id, @RequestBody UserUpdateDTO updateDTO) {
+    public ResponseEntity<?> updateUser(@PathVariable("id") long id, @RequestBody UserUpdateDTO updateDTO) {
         Optional<ValidationErrors> errors = validators.validate(updateDTO);
         if (errors.isPresent()) {
-            return new Response(ResponseStatus.VALIDATION_ERROR, errors.get());
+            return new ResponseEntity<>(errors.get().getErrors(), HttpStatus.BAD_REQUEST);
         }
         UserDTO updatedUser = userService.updateUser(id, updateDTO);
         if (updatedUser == null) {
-            return new Response(ResponseStatus.INTERNAL_ERROR, "User not found with given id.");
+            return new ResponseEntity<>("User not found with given id.", HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            return new Response(ResponseStatus.OK, updatedUser);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         }
     }
 
     @Secured(USER)
     @RequestMapping(value = "/user", method = GET)
-    public Response getSelf(Principal principal) {
+    public ResponseEntity<?> getSelf(Principal principal) {
         String username = principal.getName();
         Optional<UserDTO> userDTO = userService.findAndMapUser(username, UserDTO.class);
-        if (!userDTO.isPresent()) return new Response(ResponseStatus.INTERNAL_ERROR, "No user found!");
-
-        return new Response(ResponseStatus.OK, userDTO.get());
+        if (!userDTO.isPresent()) return new ResponseEntity<>("No user found.", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(userDTO.get(), HttpStatus.OK);
     }
 
     @Secured(ADMIN)
     @RequestMapping(value = "/user/{id}", method = GET)
-    public Response adminGetUser(@PathVariable("id") long id) {
+    public ResponseEntity<?> adminGetUser(@PathVariable("id") long id) {
         Optional<UserDTO> userDTO = userService.findAndMapUser(id, UserDTO.class);
-        if (!userDTO.isPresent()) return new Response(ResponseStatus.INTERNAL_ERROR, "No user found with given id!");
+        if (!userDTO.isPresent()) return new ResponseEntity<>("No user found with given id.", HttpStatus.BAD_REQUEST);
 
-        return new Response(ResponseStatus.OK, userDTO.get());
+        return new ResponseEntity<>(userDTO.get(), HttpStatus.OK);
     }
 
 }
