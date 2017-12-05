@@ -17,8 +17,9 @@ public class TransportDetailsDTO {
     private AddressDTO placeofUnload;
     private LocalDate timeOfUnload;
     private List<BidDTO> bids;
+    private int startingPrice;
 
     public int getCurrentPrice() {
-        return bids.stream().mapToInt(b -> b.getAmount()).min().getAsInt();
+        return bids.size() > 0 ? bids.stream().mapToInt(b -> b.getAmount()).min().getAsInt() : startingPrice;
     }
 }
