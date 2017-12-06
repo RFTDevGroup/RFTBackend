@@ -8,4 +8,5 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findAllBySender(User sender);
     List<Message> findAllByTo(User to);
+    List<Message> findAllByToAndRead(User to, boolean read);
 }

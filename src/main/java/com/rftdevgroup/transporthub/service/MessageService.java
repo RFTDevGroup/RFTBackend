@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface MessageService {
     <T> Optional<T> findAndMapMessage(long id, Class<T> mapTo);
     List<MessageViewDTO> findMessagesFor(String username);
+    List<MessageViewDTO> findUnreadMessagesFor(String username);
     void sendSystemMessage(User to, String messageTopic, String messageBody);
 }

@@ -25,4 +25,10 @@ public class MessageController {
     public ResponseEntity<?> getAllMessagesForUser(Principal principal) {
         return new ResponseEntity<>(messageService.findMessagesFor(principal.getName()), HttpStatus.OK);
     }
+
+    @Secured(USER)
+    @RequestMapping(value = "/unread", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllUnreadMessagesForUser(Principal principal){
+        return new ResponseEntity<>(messageService.findUnreadMessagesFor(principal.getName()), HttpStatus.OK);
+    }
 }

@@ -49,4 +49,18 @@ public class MessageServiceImpl implements MessageService {
 
         messageRepository.save(message);
     }
+
+    @Override
+    public List<MessageViewDTO> findUnreadMessagesFor(String username) {
+        Optional<User> user = userRepository.findUserByUserName(username);
+        if (!user.isPresent()) {
+            return null;
+        }
+
+        List<Message> messages = messageRepository.findAllByToAndRead(user.get(), false);
+        messages.forEach(m -> m.setRead(true));
+        messageRepository.save(messages);
+
+        return messages.stream().map(m -> modelMapper.map(m, MessageViewDTO.class)).collect(Collectors.toList());
+    }
 }
