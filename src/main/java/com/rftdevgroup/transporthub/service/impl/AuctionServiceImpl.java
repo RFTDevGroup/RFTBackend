@@ -31,7 +31,7 @@ public class AuctionServiceImpl implements AuctionService {
     private UserRepository userRepository;
 
     @Override
-    public void makeBid(long transportId, int amount, String username) throws AuctionError{
+    public void makeBid(long transportId, int amount, String username) throws AuctionError {
         //Grab components
         Transport transport = transportRepository.findOne(transportId);
         if (transport == null) throw new MissingTransportError();
@@ -43,9 +43,10 @@ public class AuctionServiceImpl implements AuctionService {
         if (amount >= transport.getCurrentPrice()) throw new InvalidAmountError();
         //Check last bidder
         Optional<Bid> lastBid = transport.getBids().stream().min(Comparator.comparing(Bid::getAmount));
-        if(lastBid.isPresent()){
-            log.debug("Last bidder: {}",lastBid.get().getBidder().getUserName());
-            if(lastBid.get().getBidder().equals(bidder.get())) throw new AuctionError();
+        if (lastBid.isPresent()) {
+            log.debug("Last bidder: {}", lastBid.get().getBidder().getUserName());
+            if (lastBid.get().getBidder().equals(bidder.get()))
+                throw new AuctionError("You already has the lowest bet.");
         }
         //Make new bid
         bid.setBidder(bidder.get());

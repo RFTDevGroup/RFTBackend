@@ -7,4 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuctionError extends Throwable {
     private String message;
+
+    public AuctionError(String message) {
+        this.message = message;
+    }
 }
