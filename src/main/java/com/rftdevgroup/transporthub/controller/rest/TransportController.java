@@ -6,6 +6,7 @@ import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
 import com.rftdevgroup.transporthub.data.model.transport.Transport;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
+import com.rftdevgroup.transporthub.service.MessageService;
 import com.rftdevgroup.transporthub.service.TransportService;
 import com.rftdevgroup.transporthub.service.UserService;
 import com.rftdevgroup.transporthub.validator.ValidationErrors;

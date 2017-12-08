@@ -39,7 +39,7 @@ public class AuctionController {
             auctionService.makeBid(transportId, bidDTO.getAmount(), principal.getName());
             return new ResponseEntity<>("Bid placed.", HttpStatus.OK);
         } catch (AuctionError auerr) {
-            return new ResponseEntity<>(auerr, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(auerr.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

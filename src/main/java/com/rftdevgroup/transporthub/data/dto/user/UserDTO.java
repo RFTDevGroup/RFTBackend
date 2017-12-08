@@ -1,5 +1,6 @@
 package com.rftdevgroup.transporthub.data.dto.user;
 
+import com.rftdevgroup.transporthub.data.model.user.Address;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,6 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private String address;
+    private Address address;
     private List<String> roles;
 }
