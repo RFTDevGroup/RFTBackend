@@ -6,6 +6,7 @@ import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.message.MessageRepository;
 import com.rftdevgroup.transporthub.data.repository.user.UserRepository;
 import com.rftdevgroup.transporthub.service.MessageService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageRepository messageRepository;

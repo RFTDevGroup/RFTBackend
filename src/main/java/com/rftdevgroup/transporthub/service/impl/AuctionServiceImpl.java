@@ -31,29 +31,40 @@ public class AuctionServiceImpl implements AuctionService {
     public void makeBid(long transportId, int amount, String username) throws AuctionError {
         //Grab components
         Transport transport = transportRepository.findOne(transportId);
-        if (transport == null) throw new MissingTransportError();
+        if (transport == null) {
+            log.error("Transport({}) is missing.", transportId);
+            throw new MissingTransportError();
+        }
         Optional<User> bidder = userRepository.findUserByUserName(username);
-        if (!bidder.isPresent()) throw new MissingUserError();
+        if (!bidder.isPresent()) {
+            log.error("The bidding user({}) is missing.", username);
+            throw new MissingUserError();
+        }
         Bid bid = new Bid();
 
         //Check bidding amount
-        if (amount >= transport.getCurrentPrice()) throw new InvalidAmountError();
+        if (amount >= transport.getCurrentPrice()) {
+            log.error("The bidding amount({}) is higher than the current lowest bid().", amount, transport.getCurrentPrice());
+            throw new InvalidAmountError();
+        }
         //Check last bidder
         Optional<Bid> lastBid = transport.getBids().stream().min(Comparator.comparing(Bid::getAmount));
         if (lastBid.isPresent()) {
-            log.debug("Last bidder: {}", lastBid.get().getBidder().getUserName());
-            if (lastBid.get().getBidder().equals(bidder.get()))
+            if (lastBid.get().getBidder().equals(bidder.get())) {
+                log.error("Bidder already has the lowest bid.");
                 throw new HasLowestBidError();
+            }
         }
         //Check owner cannot bid on his/her transport job
-        if(transport.getOwner().equals(bidder.get())){
+        if (transport.getOwner().equals(bidder.get())) {
+            log.error("Transport owner cannot bid on his/her transport job.");
             throw new OwnerBiddingError();
         }
         //Make new bid
         bid.setBidder(bidder.get());
         bid.setTransport(transportRepository.findOne(transportId));
         bid.setAmount(amount);
-
+        log.debug("Bid saved(bidder: {}, transport({}), Amount: {})", bidder.get().getUserName(), transportId, amount);
         bidRepository.save(bid);
     }
 }

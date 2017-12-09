@@ -7,6 +7,7 @@ import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
 import com.rftdevgroup.transporthub.service.MessageService;
 import com.rftdevgroup.transporthub.service.TransportService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class TransportServiceImpl implements TransportService {
 
     @Autowired
