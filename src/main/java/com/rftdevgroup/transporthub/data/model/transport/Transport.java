@@ -45,6 +45,6 @@ public class Transport {
     private List<Bid> bids;
 
     public int getCurrentPrice() {
-        return bids.stream().mapToInt(b -> b.getAmount()).min().getAsInt();
+        return bids.size() > 0 ? bids.stream().mapToInt(b -> b.getAmount()).min().getAsInt() : startingPrice;
     }
 }
