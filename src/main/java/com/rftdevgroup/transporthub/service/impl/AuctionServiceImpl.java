@@ -7,10 +7,7 @@ import com.rftdevgroup.transporthub.data.repository.auction.BidRepository;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
 import com.rftdevgroup.transporthub.data.repository.user.UserRepository;
 import com.rftdevgroup.transporthub.service.AuctionService;
-import com.rftdevgroup.transporthub.service.impl.errors.AuctionError;
-import com.rftdevgroup.transporthub.service.impl.errors.InvalidAmountError;
-import com.rftdevgroup.transporthub.service.impl.errors.MissingTransportError;
-import com.rftdevgroup.transporthub.service.impl.errors.MissingUserError;
+import com.rftdevgroup.transporthub.service.impl.errors.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +43,11 @@ public class AuctionServiceImpl implements AuctionService {
         if (lastBid.isPresent()) {
             log.debug("Last bidder: {}", lastBid.get().getBidder().getUserName());
             if (lastBid.get().getBidder().equals(bidder.get()))
-                throw new AuctionError("You already has the lowest bet.");
+                throw new HasLowestBidError();
+        }
+        //Check owner cannot bid on his/her transport job
+        if(transport.getOwner().equals(bidder.get())){
+            throw new OwnerBiddingError();
         }
         //Make new bid
         bid.setBidder(bidder.get());
