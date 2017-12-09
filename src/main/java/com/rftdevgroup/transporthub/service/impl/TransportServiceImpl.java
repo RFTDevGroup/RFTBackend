@@ -2,11 +2,13 @@ package com.rftdevgroup.transporthub.service.impl;
 
 import com.rftdevgroup.transporthub.data.dto.transport.TransportCreateDTO;
 import com.rftdevgroup.transporthub.data.dto.transport.TransportListViewDTO;
+import com.rftdevgroup.transporthub.data.model.auction.Bid;
 import com.rftdevgroup.transporthub.data.model.transport.Transport;
 import com.rftdevgroup.transporthub.data.model.user.User;
 import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
 import com.rftdevgroup.transporthub.service.MessageService;
 import com.rftdevgroup.transporthub.service.TransportService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class TransportServiceImpl implements TransportService {
 
     @Autowired
@@ -44,8 +49,10 @@ public class TransportServiceImpl implements TransportService {
             listViewDTO.setOwner(transport.getOwner().getUserName());
             if (transport.getBids().size() > 0) {
                 listViewDTO.setCurrentPrice(transport.getBids().stream().mapToInt(b -> b.getAmount()).min().getAsInt());
+                listViewDTO.setLowestBidder(transport.getBids().stream().min(Comparator.comparing(Bid::getAmount)).get().getBidder().getUserName());
             } else {
                 listViewDTO.setCurrentPrice(transport.getStartingPrice());
+                listViewDTO.setLowestBidder("");
             }
             listViewDTO.setDaysRemaining(ChronoUnit.DAYS.between(LocalDate.now(), transport.getTimeOfLoad()));
 

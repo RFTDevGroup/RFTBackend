@@ -16,4 +16,5 @@ public class TransportListViewDTO {
     private long daysRemaining;
     private String owner;
     private int currentPrice;
+    private String lowestBidder;
 }

@@ -13,3 +13,10 @@ flyway:
 server:
   port: 8080
   context-path: /transporthub
+
+banner:
+  location: classpath:banner.txt
+logging:
+  level:
+    root: WARN
+
