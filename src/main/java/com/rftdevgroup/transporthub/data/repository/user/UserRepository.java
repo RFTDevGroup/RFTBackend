@@ -8,5 +8,7 @@ import java.util.Optional;
  * Spring {@link JpaRepository} for storing {@link User} objects.
  */
 public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findUserByUserNameAndActive(String username, boolean active);
+
     Optional<User> findUserByUserName(String username);
 }

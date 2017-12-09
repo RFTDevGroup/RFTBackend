@@ -4,9 +4,10 @@ import com.rftdevgroup.transporthub.data.dto.user.UserCredentialDTO;
 import com.rftdevgroup.transporthub.data.dto.user.UserDTO;
 import com.rftdevgroup.transporthub.data.dto.user.UserRegisterDTO;
 import com.rftdevgroup.transporthub.data.dto.user.UserUpdateDTO;
+import com.rftdevgroup.transporthub.data.model.transport.Transport;
 import com.rftdevgroup.transporthub.data.model.user.Role;
 import com.rftdevgroup.transporthub.data.model.user.User;
-import com.rftdevgroup.transporthub.data.repository.user.AddressRepository;
+import com.rftdevgroup.transporthub.data.repository.transport.TransportRepository;
 import com.rftdevgroup.transporthub.data.repository.user.RoleRepository;
 import com.rftdevgroup.transporthub.data.repository.user.UserRepository;
 import com.rftdevgroup.transporthub.service.UserService;
@@ -33,14 +34,14 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private AddressRepository addressRepository;
+    private TransportRepository transportRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public <T> Optional<T> findAndMapUser(String username, Class<T> mapTo) {
-        Optional<User> user = userRepository.findUserByUserName(username);
+        Optional<User> user = userRepository.findUserByUserNameAndActive(username, true);
         return user.isPresent() ? Optional.of(modelMapper.map(user.get(), mapTo)) : Optional.empty();
     }
 
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> listUsers() {
         return userRepository.findAll().stream()
+                .filter(User::isActive)
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }
@@ -63,6 +65,7 @@ public class UserServiceImpl implements UserService {
         User userToSave = modelMapper.map(registerDTO, User.class);
         Role role = roleRepository.findByName("user");
         userToSave.setRoles(Arrays.asList(role));
+        userToSave.setActive(true);
         User saved = userRepository.save(userToSave);
         return modelMapper.map(saved, UserCredentialDTO.class);
     }
@@ -74,7 +77,11 @@ public class UserServiceImpl implements UserService {
         User userToBeDeleted = userRepository.findOne(id);
         if (userToBeDeleted == null) return false;
 
-        userRepository.delete(userToBeDeleted);
+        List<Transport> transports = transportRepository.findAllByOwner(userToBeDeleted);
+        transportRepository.delete(transports);
+
+        userToBeDeleted.setActive(false);
+        userRepository.save(userToBeDeleted);
 
         return true;
     }

@@ -1,5 +1,5 @@
-INSERT INTO user (id, user_name, password, udid) VALUES (1, 'rftadmin', '$2a$12$BVFMhIW9BQJtg/niwjx1BOajHSfsspmsR4vmPSdymDabpophd7i.6', 1);
-INSERT INTO user (id, user_name, password, udid) VALUES (2, 'rftuser', '$2a$12$BVFMhIW9BQJtg/niwjx1BOajHSfsspmsR4vmPSdymDabpophd7i.6', 2);
+INSERT INTO user (id, user_name, active, password, udid) VALUES (1, 'rftadmin', true, '$2a$12$BVFMhIW9BQJtg/niwjx1BOajHSfsspmsR4vmPSdymDabpophd7i.6', 1);
+INSERT INTO user (id, user_name, active, password, udid) VALUES (2, 'rftuser', true, '$2a$12$BVFMhIW9BQJtg/niwjx1BOajHSfsspmsR4vmPSdymDabpophd7i.6', 2);
 
 INSERT INTO role (id, name) VALUES (1, 'admin');
 INSERT INTO role (id, name) VALUES (2, 'user');
