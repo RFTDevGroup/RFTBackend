@@ -21,7 +21,7 @@ public class UserDetails {
 
     private String firstName;
     private String lastName;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "aid")
     private Address address;
     private String email;
